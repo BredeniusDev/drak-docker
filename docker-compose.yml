@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  mongodb-drak:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - './data:/data/db'
+  mongo-express-drak:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8080:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
+      - ME_CONFIG_MONGODB_SERVER=mongodb-drak
+  drak:
+    image: docker.io/bredenius/drak:latest
+    ports:
+      - 4000:4000
+  drak-gui:
+    image: docker.io/bredenius/drak-gui:latest
+    ports:
+      - 1337:80
